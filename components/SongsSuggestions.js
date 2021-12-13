@@ -31,8 +31,15 @@ export default function SongsSuggestions({query}) {
         <div className="suggestions-box">
             {tracks.items.map(track => 
             <div key={track.id} className='suggestion'>
-                <img src={track.album.images[2].url} alt={track.name}/>
-                {track.album.artists[0].name} - {track.name}
+                <img 
+                height={40} 
+                src={track.album.images[2].url} 
+                alt={track.name}
+                />
+                <div>
+                    <span>{track.name.length < 50 ? track.name : track.name.substring(0, 50) + "..."}</span>
+                    <span>{track.artists[0].name}</span>
+                </div>
             </div>
             )}
         </div>

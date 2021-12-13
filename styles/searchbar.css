@@ -1,3 +1,4 @@
+/* component */
 .searchbar {
     display: flex;
     flex-direction: column;
@@ -9,35 +10,50 @@
     
 }
 
+/* input */
 .searchbar > input {
     background-color: white;
     border: none;
+    height: 30px;
 }
-.searchbar > input:not(:focus) + .suggestions-box {
+.searchbar > input:focus {
+    outline: none;
+}
+/* .searchbar > input:not(:focus) + .suggestions-box {
     display: none;
-}
+} */
 
+/* box */
 .searchbar > .suggestions-box {
     background-color: #fff;
 
     border-bottom-left-radius: 10px;
-
-    height: 310px;
+    
+    height: fit-content;
+    max-height: 310px;
 
     overflow-y: scroll;
-    scroll-snap-type: y proximity;
 }
-
-
 .suggestions-box::-webkit-scrollbar {
     width: 5px;
     background: #333;
 }
 .suggestions-box::-webkit-scrollbar-thumb {
+    height: 20px;
     background: #fff;
 }
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+    border-bottom-left-radius: 10px;
+}
 
-.suggestions-box > .suggestion {
+/* suggestion */
+.suggestion {
     display: flex;
     gap: 10px;
     flex-direction: row;
@@ -49,6 +65,19 @@
     color: white;
 
     border-top: white 1px solid;
-
-    scroll-snap-align: start;
+}
+.suggestion:hover {
+    background-color: #555;
+}
+.suggestion > div {
+    display: flex;
+    flex-direction: column;
+}
+.suggestion > div :nth-child(1) {
+    font-weight: bold;
+    font-size: 0.9em;
+}
+.suggestion > div :nth-child(2) {
+    font-size: 0.8em;
+    color: #999;
 }

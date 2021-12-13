@@ -1,6 +1,6 @@
 import {CLIENT_ID, CLIENT_SECRET} from './credentials.js'
 
-const searchSong = async (song) => {
+const getToken = async () => {
     const tokenResponse = await fetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
         headers: {
@@ -9,17 +9,62 @@ const searchSong = async (song) => {
         },
         body: 'grant_type=client_credentials'
     })
-    const token = await tokenResponse.json()
+    return await tokenResponse.json()
+}
 
+const searchSong = async (song) => {
+    const token = await getToken()
     const response = await fetch(`https://api.spotify.com/v1/search?q=${song}&type=track`, {
         headers: {
             'Authorization': 'Bearer ' + token.access_token
         }
     })
-
     return response;
 }
 
+const getUser = async (token) => {
+    const response = await fetch(`https://api.spotify.com/v1/me`, {
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+        }
+    })
+    return response;
+}
+
+const getUserTop = async (token, type, time_range="medium_term") => {
+    const response = await fetch(`https://api.spotify.com/v1/me/top/${type}?time_range=${time_range}`, {
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+        }
+    })
+    return response;
+}
+
+const login = () => {
+    const REDIRECT_URI = 'http://localhost:3000/callback'
+    const SCOPES = [
+        'user-read-private',
+        'user-read-email',
+        'user-read-playback-state',
+        'user-modify-playback-state',
+        'user-read-currently-playing',
+        'user-read-recently-played',
+        'user-top-read'
+    ]
+    const SCOPES_STRING = SCOPES.join('%20')
+    const url = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=token&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_STRING}&show_dialog=true`
+    return url;
+}
+
+
+
+
+
 export { 
     searchSong,
+    getUser,
+    login,
+    getUserTop
 };
