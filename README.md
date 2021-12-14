@@ -1,1 +1,1 @@
-Just added a README cause I'm a good person, and I'm bored.
+Just added a README cause I'm a good person, and I'm bored. Edited to Redeploy, cause I don't know how to manually redeploy withouth a new commit.
