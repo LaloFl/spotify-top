@@ -77,7 +77,7 @@ const getTracksDetails = async (tracks) => {
 }
 
 const login = () => {
-    const REDIRECT_URI = 'http://localhost:3000/callback'
+    const REDIRECT_URI = 'https://spotify-top-vercel.vercel.app/callback'
     const SCOPES = [
         'user-read-private',
         'user-read-email',
