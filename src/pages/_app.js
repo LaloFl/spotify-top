@@ -3,6 +3,7 @@ import '../../styles/global.css'
 import '../../styles/navbar.css'
 import '../../styles/footer.css'
 import '../../styles/searchbar.css'
+import '../../styles/userTop.css'
 
 import Layout from '../../components/Layout'
 
