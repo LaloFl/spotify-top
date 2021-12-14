@@ -12,7 +12,9 @@
 
 /* input */
 .searchbar > input {
-    background-color: white;
+    background-color: var(--color-background-light);
+    color:white;
+    padding: 0 4px;
     border: none;
     height: 30px;
 }
@@ -25,8 +27,6 @@
 
 /* box */
 .searchbar > .suggestions-box {
-    background-color: #fff;
-
     border-bottom-left-radius: 10px;
     
     height: fit-content;
@@ -48,7 +48,9 @@
     align-items: center;
     height: 100%;
     width: 100%;
-    background-color: #fff;
+    background-color: var(--color-background-light);
+    color: white;
+    padding: 6px 0;
     border-bottom-left-radius: 10px;
 }
 
@@ -59,12 +61,12 @@
     flex-direction: row;
     align-items: center;
     padding: 5px;
-    cursor: pointer;
 
     background-color: #444;
     color: white;
 
-    border-top: white 1px solid;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 .suggestion:hover {
     background-color: #555;
@@ -76,6 +78,10 @@
 .suggestion > div :nth-child(1) {
     font-weight: bold;
     font-size: 0.9em;
+}
+.suggestion > div :nth-child(1):hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
 .suggestion > div :nth-child(2) {
     font-size: 0.8em;

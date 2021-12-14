@@ -12,9 +12,9 @@ const getToken = async () => {
     return await tokenResponse.json()
 }
 
-const searchSong = async (song) => {
+const searchSong = async (song, limit=20) => {
     const token = await getToken()
-    const response = await fetch(`https://api.spotify.com/v1/search?q=${song}&type=track`, {
+    const response = await fetch(`https://api.spotify.com/v1/search?q=${song}&type=track&limit=${limit}`, {
         headers: {
             'Authorization': 'Bearer ' + token.access_token
         }
@@ -42,6 +42,40 @@ const getUserTop = async (token, type, time_range="medium_term") => {
     return response;
 }
 
+const audioFeatures = async (id, many=false) => {
+    const token = await getToken()
+    var response;
+    if (many) {
+        response = await fetch(`https://api.spotify.com/v1/audio-features?ids=${id}`, {
+            headers: {
+                'Authorization': 'Bearer ' + token.access_token
+            }
+        })
+        response;
+    } else {
+        response = await fetch(`https://api.spotify.com/v1/audio-features/${id}`, {
+            headers: {
+                'Authorization': 'Bearer ' + token.access_token
+            }
+        })
+    }
+    return response;
+}
+
+const getTracksDetails = async (tracks) => {
+    const tracksIDs = tracks.map(track => track.id)
+    const IDsString = tracksIDs.join(',')
+    const features = await audioFeatures(IDsString, true)
+    const featuresData = await features.json()
+    const fullTracks = tracks.map((track, index) => {
+        return {
+            ...track,
+            ...featuresData.audio_features[index]
+        }
+    })
+    return fullTracks;
+}
+
 const login = () => {
     const REDIRECT_URI = 'http://localhost:3000/callback'
     const SCOPES = [
@@ -61,10 +95,11 @@ const login = () => {
 
 
 
-
 export { 
     searchSong,
     getUser,
     login,
-    getUserTop
+    getUserTop,
+    audioFeatures,
+    getTracksDetails
 };
