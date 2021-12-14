@@ -55,11 +55,11 @@ export default function SongsSuggestions({query}) {
                         </span>
                     </Link>
                     <span>{track.artists[0].name}</span>
-                    {/* {keys.map(key =>
+                    {keys.map(key =>
                         <span key={key} className='txt-2'>
                             {key[0].toUpperCase()+key.substring(1)}: {track[key]}
                         </span>
-                    )} */}
+                    )}
                 </div>
             </div>
             )}

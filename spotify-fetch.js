@@ -1,4 +1,4 @@
-import {CLIENT_ID, CLIENT_SECRET} from './credentials.js'
+import {CLIENT_ID, CLIENT_SECRET, REDIRECT_URI} from './credentials.js'
 
 const getToken = async () => {
     const tokenResponse = await fetch('https://accounts.spotify.com/api/token', {
@@ -77,7 +77,6 @@ const getTracksDetails = async (tracks) => {
 }
 
 const login = () => {
-    const REDIRECT_URI = 'https://spotify-top-vercel.vercel.app/callback'
     const SCOPES = [
         'user-read-private',
         'user-read-email',

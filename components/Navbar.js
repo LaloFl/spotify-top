@@ -7,7 +7,7 @@ export default function Navbar() {
         <nav className='navbar'>
             <div className='nav_box'>
                     <Link className="link" href='/'>
-                        <span className='link'><FaHome/></span>
+                        <span className='link home-icon'><FaHome size={20}/></span>
                     </Link>
             </div>
         </nav>

@@ -6,16 +6,15 @@ nav.navbar {
     padding: 10px 0;
 }
 
-.navbar > .nav_box {
+.nav_box {
     display: flex;
     flex-direction: column;
 
-    width: 70%;
-    max-width: 1000px;
+    width: 80%;
+    max-width: 1400px;
     gap: 1rem;
 }
 
-.navbar > .nav_box > a {
-
+.nav_box > .link {
+    width: fit-content;
 }
-

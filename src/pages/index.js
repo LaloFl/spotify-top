@@ -29,9 +29,9 @@ export default function Home() {
             <button
             onClick={() => {window.location.href = login()}}
             >
-                Log in
+                Login
             </button>
-
+            
         </>
     )
 }
