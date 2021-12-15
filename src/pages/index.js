@@ -34,7 +34,7 @@ export default function Home() {
         <>
             <SongsSearchbar />
             <button
-            onLoad={() => {window.location.href = login()}}
+            onClick={() => {window.location.href = login()}}
             >
                 Login
             </button>
