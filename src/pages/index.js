@@ -34,12 +34,10 @@ export default function Home() {
         <>
             <SongsSearchbar />
             <button
-            onClick={() => {window.location.href = login()}}
+            onLoad={() => {window.location.href = login()}}
             >
                 Login
             </button>
-            <PieChart size={200} data={data}
-            placeholder1="data" placeholder2="data2" />
         </>
     )
 }
