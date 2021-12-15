@@ -3,7 +3,7 @@ import { Group } from '@visx/group'
 import {pie, Pie} from '@visx/shape'
 import { Text } from '@visx/text'
 
-export default function PieChart({size, data, placeholder1, placeholder2}) {
+export default function PieChart({size=200, data, placeholder1="Data", placeholder2="value", placeholderColor='#fff'}) {
     const [active, setActive] = React.useState(null)
     const half = size / 2;
 
@@ -41,7 +41,7 @@ export default function PieChart({size, data, placeholder1, placeholder2}) {
                     <Text 
                     className='pie-text_main' 
                     textAnchor='middle' 
-                    fill={active ? active?.color : "#fff"} 
+                    fill={active ? active?.color : placeholderColor} 
                     dy={-5}
                     >
                         {active ?

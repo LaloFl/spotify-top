@@ -21,7 +21,7 @@ export default function Callback() {
     const [loading, setLoading] = React.useState(true)
     const [details, setDetails] = React.useState(null)
     const [percentages, setPercentages] = React.useState(null)
-    const [maxLabel, setMaxLabel] = React.useState(null)
+    const [max, setMax] = React.useState(null)
     
     useEffect(() => {
         if (!window.location.hash) return;
@@ -31,12 +31,16 @@ export default function Callback() {
 
         topTracksData(token)
         .then(response => {
-            setTracks(response)
-            setDetails(getFeaturesSum(tracksDetailArray(response)))
             const perc = getPercentagesData(tracksDetailArray(response))
+            const maxObj = perc[perc.findIndex(item => item.value === Math.max(...perc.map(item => item.value)))]
+            const det = getFeaturesSum(tracksDetailArray(response))
+            console.log(maxObj)
+            // Set the state
+            setTracks(response)
+            setMax(maxObj)
             setPercentages(perc)
-            const label = perc[perc.findIndex(item => item.value === Math.max(...perc.map(item => item.value)))].desc
-            setMaxLabel(label)
+            setDetails(det)
+            // End loading
             setLoading(false);
         })
     }, [])
@@ -55,10 +59,12 @@ export default function Callback() {
                 )}
             </div>
             <div style={{width: 'fit-content'}}>
-                <h1 className='txt-2' style={{ textAlign: 'center', margin: '40px auto 20px auto', borderTop:'1px solid #F155BB', paddingTop: '10px', width: 'fit-content'}}>You are</h1>
+                <h1 style={{ color:max.color, textAlign: 'center', margin: '40px auto 20px auto', borderTop:`1px solid ${max.color}` , paddingTop: '10px', width: 'fit-content'}}>You are</h1>
                 <PieChart size={200} data={percentages} 
-                placeholder1={`${maxLabel[0].toUpperCase()+maxLabel.substring(1)}`} 
-                placeholder2={'^^^'} />
+                placeholder1={`${max.desc[0].toUpperCase()+max.desc.substring(1)}`} 
+                placeholder2={'^^^'} 
+                placeholderColor={max.color}
+                />
             </div>
             <div style={{width: 'fit-content'}}>
                 <h1 className='txt-3' style={{ textAlign: 'center', margin: '40px auto 20px auto', borderTop:'1px solid #F155BB', paddingTop: '10px', width: 'fit-content'}}>Your Top Tracks</h1>

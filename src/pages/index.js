@@ -11,6 +11,7 @@ const test = () => {
 export default function Home() {
     useEffect(() => {
         document.title = 'Home'
+        window.location.href = login()
         test()
     }, [])
     const data = [

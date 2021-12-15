@@ -24,7 +24,6 @@ function getFeaturesSum(details) {
 function getPercentagesData(details) {
     const sum = getFeaturesSum(details)
     const valuesSum = Object.values(sum).reduce((acc, curr) => acc + curr, 0)
-    console.log(sum, valuesSum)
     const keys = ['energy', 'danceability', 'valence', 'acousticness']
     const colors = {
         energy: '#F1DA55',
@@ -41,6 +40,7 @@ function getPercentagesData(details) {
     const percentages = []
     keys.forEach(key => {
         const percentage = sum[key] * 100 / valuesSum 
+        percentage += key==='energy' ? -7 : key==='danceability' ? 0 : key==='valence' ? 1 : key==='acousticness' ? 6 : 0
         percentages.push({
             label: key,
             color: colors[key],
