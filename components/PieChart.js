@@ -45,7 +45,7 @@ export default function PieChart({size, data, placeholder1, placeholder2}) {
                     dy={-5}
                     >
                         {active ?
-                            `${active?.label}`
+                            `${active?.label[0].toUpperCase()+active?.label.substring(1)}`
                          : `${placeholder1}`}
                     </Text>
                     <Text 
@@ -54,7 +54,7 @@ export default function PieChart({size, data, placeholder1, placeholder2}) {
                     fill='#888' 
                     dy={20}>
                         {active ?
-                            `${active?.value}%`
+                            `${Math.round(active?.value)}%`
                          : `${placeholder2}`}
                     </Text>
                 </Group>

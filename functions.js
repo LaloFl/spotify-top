@@ -15,13 +15,44 @@ function tracksDetailArray(tracks) {
 }
 
 function getFeaturesSum(details) {
-    const keys = ['energy', 'danceability', 'valence', 'acousticness', 'instrumentalness', 'speechiness', 'liveness']
+    const keys = ['energy', 'danceability', 'valence', 'acousticness']
     const sum = {}
     keys.forEach(key => sum[key] = details.reduce((acc, curr) => acc + curr[key], 0))
     return sum
 }
 
+function getPercentagesData(details) {
+    const sum = getFeaturesSum(details)
+    const valuesSum = Object.values(sum).reduce((acc, curr) => acc + curr, 0)
+    console.log(sum, valuesSum)
+    const keys = ['energy', 'danceability', 'valence', 'acousticness']
+    const colors = {
+        energy: '#F1DA55',
+        danceability: '#F15587',
+        valence: '#55EFF1',
+        acousticness: '#F18C55',
+    }
+    const descriptions = {
+        energy: 'Energetic',
+        danceability: 'A dancer',
+        valence: 'Happy',
+        acousticness: 'Acoustic'
+    }
+    const percentages = []
+    keys.forEach(key => {
+        const percentage = sum[key] * 100 / valuesSum 
+        percentages.push({
+            label: key,
+            color: colors[key],
+            value: percentage,
+            desc: descriptions[key]
+        })
+    });
+    return percentages
+}
+
 export {
     tracksDetailArray,
-    getFeaturesSum
+    getFeaturesSum,
+    getPercentagesData
 }

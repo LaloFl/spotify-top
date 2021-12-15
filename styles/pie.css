@@ -3,7 +3,8 @@
 }
 
 .pie-text_main > tspan {
-    font-size: 1.6em;
+    font-size: 1.4em;
+    font-weight: bold;
     text-align: center;
 }
 .pie-text_desc > tspan {

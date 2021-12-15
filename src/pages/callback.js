@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
 
 import Loader from 'react-loader-spinner'
+import PieChart from '../../components/PieChart.js'
+
 import {getUserTop, getTracksDetails} from '../../spotify-fetch.js'
-import {tracksDetailArray, getFeaturesSum} from '../../functions.js'
+import {tracksDetailArray, getFeaturesSum, getPercentagesData} from '../../functions.js'
 
 const topTracksData = async (token) => {
     const userTop = await getUserTop(token, "tracks")
@@ -18,6 +20,8 @@ export default function Callback() {
     const [tracks, setTracks] = React.useState(null)
     const [loading, setLoading] = React.useState(true)
     const [details, setDetails] = React.useState(null)
+    const [percentages, setPercentages] = React.useState(null)
+    const [maxLabel, setMaxLabel] = React.useState(null)
     
     useEffect(() => {
         if (!window.location.hash) return;
@@ -29,6 +33,10 @@ export default function Callback() {
         .then(response => {
             setTracks(response)
             setDetails(getFeaturesSum(tracksDetailArray(response)))
+            const perc = getPercentagesData(tracksDetailArray(response))
+            setPercentages(perc)
+            const label = perc[perc.findIndex(item => item.value === Math.max(...perc.map(item => item.value)))].desc
+            setMaxLabel(label)
             setLoading(false);
         })
     }, [])
@@ -45,6 +53,12 @@ export default function Callback() {
                         <span style={{color:'white'}}>{detail[0].toUpperCase()+detail.substring(1)}: </span>{Math.round(details[detail]*100/tracks.length)}%
                     </div>
                 )}
+            </div>
+            <div style={{width: 'fit-content'}}>
+                <h1 className='txt-2' style={{ textAlign: 'center', margin: '40px auto 20px auto', borderTop:'1px solid #F155BB', paddingTop: '10px', width: 'fit-content'}}>You are</h1>
+                <PieChart size={200} data={percentages} 
+                placeholder1={`${maxLabel[0].toUpperCase()+maxLabel.substring(1)}`} 
+                placeholder2={'^^^'} />
             </div>
             <div style={{width: 'fit-content'}}>
                 <h1 className='txt-3' style={{ textAlign: 'center', margin: '40px auto 20px auto', borderTop:'1px solid #F155BB', paddingTop: '10px', width: 'fit-content'}}>Your Top Tracks</h1>

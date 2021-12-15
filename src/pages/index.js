@@ -38,8 +38,8 @@ export default function Home() {
             >
                 Login
             </button>
-            <PieChart size={200} data={data} 
-            placeholder1="data" placeholder2="data2"></PieChart>
+            <PieChart size={200} data={data}
+            placeholder1="data" placeholder2="data2" />
         </>
     )
 }
