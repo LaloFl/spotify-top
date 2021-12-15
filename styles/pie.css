@@ -1,0 +1,12 @@
+.pie-chart {
+    color: inherit;
+}
+
+.pie-text_main > tspan {
+    font-size: 1.6em;
+    text-align: center;
+}
+.pie-text_desc > tspan {
+    font-size: 1em;
+    text-align: center;    
+}

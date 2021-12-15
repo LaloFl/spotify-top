@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 
+import Loader from 'react-loader-spinner'
 import {getUserTop, getTracksDetails} from '../../spotify-fetch.js'
 import {tracksDetailArray, getFeaturesSum} from '../../functions.js'
 
@@ -31,7 +32,10 @@ export default function Callback() {
             setLoading(false);
         })
     }, [])
-    return loading ? <>Loading</> : 
+    return loading ? 
+    <>
+        <Loader type="Audio" color="#55F18C" height={50} width={100} />
+    </> : 
     (
         <div className='container'>
             <div className='top-stats'>

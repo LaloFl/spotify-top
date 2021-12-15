@@ -2,19 +2,10 @@ import React, { useEffect } from 'react'
 import { login, audioFeatures, searchSong } from '../../spotify-fetch'
 
 import SongsSearchbar from '../../components/SongsSearchbar'
+import PieChart from '../../components/PieChart'
 
 const test = () => {
-    // searchSong('d.a.n.c.e')
-    // .then(res => res.json())
-    // .then(data => {
-    //     const track = data.tracks.items[0]
-    //     console.log(track)
-    //     audioFeatures(track.id)
-    //     .then(res => res.json())
-    //     .then(data => {
-    //         console.log(data)
-    //     })
-    // })
+
 }
 
 export default function Home() {
@@ -22,7 +13,23 @@ export default function Home() {
         document.title = 'Home'
         test()
     }, [])
-
+    const data = [
+        {
+            label: 'Energy',
+            color: '#F155BB',
+            value: 10,
+        },
+        {
+            label: 'Danceability',
+            color: '#55F18C',
+            value: 20,
+        },
+        {
+            label: 'Valence',
+            color: '#F1F155',
+            value: 30,
+        },
+    ]
     return (
         <>
             <SongsSearchbar />
@@ -31,7 +38,8 @@ export default function Home() {
             >
                 Login
             </button>
-            
+            <PieChart size={200} data={data} 
+            placeholder1="data" placeholder2="data2"></PieChart>
         </>
     )
 }

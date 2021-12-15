@@ -24,7 +24,6 @@ export default function SongsSuggestions({query}) {
         if (!query) return
         getTracksData()
         .then(response => {
-            console.log(response)
             setTracks(response)
             setLoading(false)
         })

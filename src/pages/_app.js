@@ -4,6 +4,7 @@ import '../../styles/navbar.css'
 import '../../styles/footer.css'
 import '../../styles/searchbar.css'
 import '../../styles/userTop.css'
+import '../../styles/pie.css'
 
 import Layout from '../../components/Layout'
 
