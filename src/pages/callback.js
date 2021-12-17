@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 import Loader from 'react-loader-spinner'
 import PieChart from '../../components/PieChart.js'
@@ -6,8 +7,9 @@ import PieChart from '../../components/PieChart.js'
 import {getUserTop, getTracksDetails} from '../../spotify-fetch.js'
 import {tracksDetailArray, getFeaturesSum, getPercentagesData} from '../../functions.js'
 
-const topTracksData = async (token) => {
-    const userTop = await getUserTop(token, "tracks", "long_term")
+const topTracksData = async (token, period) => {
+    console.log(period)
+    const userTop = await getUserTop(token, "tracks", period)
     const userTopData = await userTop.json()
     const userTopDetails = await getTracksDetails(userTopData.items)
     return userTopDetails
@@ -22,14 +24,18 @@ export default function Callback() {
     const [details, setDetails] = React.useState(null)
     const [percentages, setPercentages] = React.useState(null)
     const [max, setMax] = React.useState(null)
+
+    const router = useRouter()
+    const term = router.query.term
     
     useEffect(() => {
+        console.log(window.location)
         if (!window.location.hash) return;
         setLoading(true);
         const params = window.location.hash.substr(1).split('&');
         const [, token] = params[0].split('=');
 
-        topTracksData(token)
+        topTracksData(token, term)
         .then(response => {
             const perc = getPercentagesData(tracksDetailArray(response))
             const maxObj = perc[perc.findIndex(item => item.value === Math.max(...perc.map(item => item.value)))]
@@ -43,13 +49,39 @@ export default function Callback() {
             // End loading
             setLoading(false);
         })
-    }, [])
+    }, [term])
     return loading ? 
     <>
         <Loader type="Audio" color="#55F18C" height={50} width={100} />
     </> : 
     (
         <div className='container'>
+            <div className='buttons-box'>
+                <button
+                onClick={() => {
+                    const origin = window.location.origin + window.location.pathname
+                    const accessToken = window.location.hash.substr(1).split('&')[0].split('=')[1]
+                    console.log(window.location)
+                    window.location.href = `${window.location.origin}/callback?term=${'long_term'}#access_token=${accessToken}`
+                }}
+                >Overall</button>
+                <button
+                onClick={() => {
+                    const origin = window.location.origin + window.location.pathname
+                    const accessToken = window.location.hash.substr(1).split('&')[0].split('=')[1]
+                    console.log(window.location)
+                    window.location.href = `${window.location.origin}/callback?term=${'medium_term'}#access_token=${accessToken}`
+                }}
+                >6 Months</button>
+                <button
+                onClick={() => {
+                    const origin = window.location.origin + window.location.pathname
+                    const accessToken = window.location.hash.substr(1).split('&')[0].split('=')[1]
+                    console.log(window.location)
+                    window.location.href = `${window.location.origin}/callback?term=${'short_term'}#access_token=${accessToken}`
+                }}
+                >1 Month</button>
+            </div>
             <div className='top-stats'>
                 <h1 style={{ textAlign: 'center', marginTop:'40px', borderTop:'1px solid #55F18C', paddingTop: '10px', marginTop: '0'}}>Stats</h1>
                 {Object.keys(details).map(detail =>
