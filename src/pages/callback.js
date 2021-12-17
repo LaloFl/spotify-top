@@ -7,7 +7,7 @@ import {getUserTop, getTracksDetails} from '../../spotify-fetch.js'
 import {tracksDetailArray, getFeaturesSum, getPercentagesData} from '../../functions.js'
 
 const topTracksData = async (token) => {
-    const userTop = await getUserTop(token, "tracks")
+    const userTop = await getUserTop(token, "tracks", "long_term")
     const userTopData = await userTop.json()
     const userTopDetails = await getTracksDetails(userTopData.items)
     return userTopDetails
