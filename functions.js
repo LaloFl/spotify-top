@@ -40,7 +40,7 @@ function getPercentagesData(details) {
     const percentages = []
     keys.forEach(key => {
         const percentage = sum[key] * 100 / valuesSum 
-        percentage += key==='energy' ? -7 : key==='danceability' ? 0 : key==='valence' ? 1 : key==='acousticness' ? 6 : 0
+        // percentage += key==='energy' ? -7 : key==='danceability' ? 0 : key==='valence' ? 1 : key==='acousticness' ? 6 : 0
         percentages.push({
             label: key,
             color: colors[key],
