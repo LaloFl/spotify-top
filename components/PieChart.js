@@ -16,7 +16,7 @@ export default function PieChart({size=200, data, placeholder1="Data", placehold
                     pieValue={(d) => d.value}
                     outerRadius={half}
                     innerRadius={({data}) => {
-                        const setSize = active && active.label === data.label ? 11: 7
+                        const setSize = active && active.label === data.label ? 18: 10
                         return half - setSize
                     }}
                     padAngle={0.1}

@@ -4,15 +4,20 @@ import { useRouter } from 'next/router'
 import Loader from 'react-loader-spinner'
 import PieChart from '../../components/PieChart.js'
 
-import {getUserTop, getTracksDetails} from '../../spotify-fetch.js'
+import {getUserTop, getTracksDetails, getUser} from '../../spotify-fetch.js'
 import {tracksDetailArray, getFeaturesSum, getPercentagesData} from '../../functions.js'
 
 const topTracksData = async (token, period) => {
-    console.log(period)
     const userTop = await getUserTop(token, "tracks", period)
     const userTopData = await userTop.json()
     const userTopDetails = await getTracksDetails(userTopData.items)
     return userTopDetails
+}
+
+const getUserData = async (token) => {
+    const user = await getUser(token)
+    const userData = await user.json()
+    return userData
 }
 
 const keys = ['energy', 'danceability', 'valence', 'acousticness', 'instrumentalness', 'speechiness', 'liveness', 'loudness', 'tempo']
@@ -28,19 +33,20 @@ export default function Callback() {
     const router = useRouter()
     const term = router.query.term
     
-    useEffect(() => {
-        console.log(window.location)
+    useEffect(async () => {
         if (!window.location.hash) return;
         setLoading(true);
         const params = window.location.hash.substr(1).split('&');
         const [, token] = params[0].split('=');
+
+        const userData = await getUserData(token)
+        document.title = userData.display_name.split(' ')[0] + "'s Top Tracks"
 
         topTracksData(token, term)
         .then(response => {
             const perc = getPercentagesData(tracksDetailArray(response))
             const maxObj = perc[perc.findIndex(item => item.value === Math.max(...perc.map(item => item.value)))]
             const det = getFeaturesSum(tracksDetailArray(response))
-            console.log(maxObj)
             // Set the state
             setTracks(response)
             setMax(maxObj)
@@ -61,7 +67,6 @@ export default function Callback() {
                 onClick={() => {
                     const origin = window.location.origin + window.location.pathname
                     const accessToken = window.location.hash.substr(1).split('&')[0].split('=')[1]
-                    console.log(window.location)
                     window.location.href = `${window.location.origin}/callback?term=${'long_term'}#access_token=${accessToken}`
                 }}
                 >Overall</button>
@@ -69,7 +74,6 @@ export default function Callback() {
                 onClick={() => {
                     const origin = window.location.origin + window.location.pathname
                     const accessToken = window.location.hash.substr(1).split('&')[0].split('=')[1]
-                    console.log(window.location)
                     window.location.href = `${window.location.origin}/callback?term=${'medium_term'}#access_token=${accessToken}`
                 }}
                 >6 Months</button>
@@ -77,7 +81,6 @@ export default function Callback() {
                 onClick={() => {
                     const origin = window.location.origin + window.location.pathname
                     const accessToken = window.location.hash.substr(1).split('&')[0].split('=')[1]
-                    console.log(window.location)
                     window.location.href = `${window.location.origin}/callback?term=${'short_term'}#access_token=${accessToken}`
                 }}
                 >1 Month</button>
